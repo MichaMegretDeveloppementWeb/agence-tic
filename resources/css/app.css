@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@import '../../vendor/falcon/ui-kit/resources/css/preset.css';
+
+@source '../../vendor/falcon/ui-kit/resources/views/**/*.blade.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Fix: ensure bg-gray-50 on search inputs is not overridden by @tailwindcss/forms */
+input[type="text"].bg-gray-50,
+input[type="search"].bg-gray-50 {
+    background-color: theme(colors.gray.50);
+}
+
+/* Thin scrollbar for all horizontal overflow containers (tables, etc.) */
+.overflow-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: theme(colors.gray.300) transparent;
+}
+.overflow-x-auto::-webkit-scrollbar {
+    height: 6px;
+}
+.overflow-x-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: theme(colors.gray.300);
+    border-radius: 3px;
+}
+
+/* Utility class for thin scrollbar on any element */
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme(colors.gray.300) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme(colors.gray.300);
+    border-radius: 3px;
+}
