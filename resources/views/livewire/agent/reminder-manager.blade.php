@@ -82,13 +82,18 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-medium text-gray-400 mb-1">Affichage</label>
-                    <label class="flex items-center gap-x-2 rounded-lg bg-white px-3 py-2 text-[13px] text-gray-600 ring-1 ring-inset ring-gray-200 cursor-pointer">
+                <div class="flex items-end pb-0.5">
+                    <label class="flex items-center gap-x-2 text-[13px] text-gray-600 cursor-pointer">
                         <input type="checkbox" wire:model.live="showCompleted" class="rounded border-gray-300 text-gray-900 focus:ring-gray-900" />
-                        Complétés
+                        Afficher complétés
                     </label>
                 </div>
+                @if($activeFilterCount > 0)
+                    <button wire:click="resetFilters" type="button" class="inline-flex items-center gap-x-1 rounded-lg px-2.5 py-1.5 text-[12px] font-medium text-red-600 hover:bg-red-50">
+                        <x-ui.icon name="x-mark" class="h-3.5 w-3.5" />
+                        Réinitialiser
+                    </button>
+                @endif
             </div>
         </div>
     </div>

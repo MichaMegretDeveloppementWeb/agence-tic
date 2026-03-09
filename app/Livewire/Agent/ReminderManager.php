@@ -30,6 +30,24 @@ class ReminderManager extends Component
 
     public int $perPage = 15;
 
+    /** @return array<string, array<string, mixed>> */
+    protected function queryString(): array
+    {
+        return [
+            'search' => ['except' => '', 'as' => 'q'],
+            'filterType' => ['except' => '', 'as' => 'type'],
+            'filterPriority' => ['except' => '', 'as' => 'priority'],
+            'showCompleted' => ['except' => false, 'as' => 'completed'],
+            'perPage' => ['except' => 15, 'as' => 'pp'],
+        ];
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['filterType', 'filterPriority', 'showCompleted']);
+        $this->resetPage();
+    }
+
     public function mount(): void
     {
         $this->markVisibleAsRead();
@@ -131,11 +149,11 @@ class ReminderManager extends Component
                     $q->where('type', ReminderType::Personal)
                         ->where('created_by', $user->id);
                 })
-                ->orWhere(function ($q) use ($user) {
-                    $q->where('type', ReminderType::Targeted)
-                        ->where('target_user_id', $user->id);
-                })
-                ->orWhere('type', ReminderType::Global);
+                    ->orWhere(function ($q) use ($user) {
+                        $q->where('type', ReminderType::Targeted)
+                            ->where('target_user_id', $user->id);
+                    })
+                    ->orWhere('type', ReminderType::Global);
             })
             ->pluck('id');
 
@@ -154,11 +172,11 @@ class ReminderManager extends Component
                     $q->where('type', ReminderType::Personal)
                         ->where('created_by', $user->id);
                 })
-                ->orWhere(function ($q) use ($user) {
-                    $q->where('type', ReminderType::Targeted)
-                        ->where('target_user_id', $user->id);
-                })
-                ->orWhere('type', ReminderType::Global);
+                    ->orWhere(function ($q) use ($user) {
+                        $q->where('type', ReminderType::Targeted)
+                            ->where('target_user_id', $user->id);
+                    })
+                    ->orWhere('type', ReminderType::Global);
             })
             ->when(! $this->showCompleted, function ($query) {
                 $query->where('is_completed', false);

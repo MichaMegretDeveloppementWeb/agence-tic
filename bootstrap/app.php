@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'agent.active' => EnsureAgentIsActive::class,
             'director' => EnsureIsDirectorG::class,
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'logout',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

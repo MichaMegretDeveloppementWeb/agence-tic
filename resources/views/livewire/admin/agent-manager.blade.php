@@ -68,6 +68,12 @@
                         <option value="inactive">Inactif</option>
                     </select>
                 </div>
+                @if($activeFilterCount > 0)
+                    <button wire:click="resetFilters" type="button" class="inline-flex items-center gap-x-1 rounded-lg px-2.5 py-1.5 text-[12px] font-medium text-red-600 hover:bg-red-50">
+                        <x-ui.icon name="x-mark" class="h-3.5 w-3.5" />
+                        Réinitialiser
+                    </button>
+                @endif
             </div>
         </div>
     </div>

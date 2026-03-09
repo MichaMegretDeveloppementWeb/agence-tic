@@ -27,6 +27,23 @@ class AgentManager extends Component
 
     public int $perPage = 15;
 
+    /** @return array<string, array<string, mixed>> */
+    protected function queryString(): array
+    {
+        return [
+            'search' => ['except' => '', 'as' => 'q'],
+            'filterLevel' => ['except' => '', 'as' => 'level'],
+            'filterStatus' => ['except' => '', 'as' => 'status'],
+            'perPage' => ['except' => 15, 'as' => 'pp'],
+        ];
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['filterLevel', 'filterStatus']);
+        $this->resetPage();
+    }
+
     public function sortBy(string $column): void
     {
         if ($this->sortBy === $column) {
@@ -127,7 +144,7 @@ class AgentManager extends Component
             }
 
             fclose($handle);
-        }, 'agents-' . now()->format('Y-m-d') . '.csv', [
+        }, 'agents-'.now()->format('Y-m-d').'.csv', [
             'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
     }

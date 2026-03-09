@@ -16,6 +16,7 @@ Route::get('/recruitment', RecruitmentController::class)->name('recruitment');
 Route::get('/recruitment/tracking', ApplicationTrackingController::class)->name('recruitment.tracking');
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/logout', LogoutController::class)->name('logout');
+Route::get('/logout', fn () => redirect()->route('login'));
 
 /* ----------------------------------------------------------------
  |  Private zone — Authenticated agents

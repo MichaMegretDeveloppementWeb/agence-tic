@@ -37,6 +37,27 @@ class ReportManager extends Component
 
     public int $perPage = 15;
 
+    /** @return array<string, array<string, mixed>> */
+    protected function queryString(): array
+    {
+        return [
+            'search' => ['except' => '', 'as' => 'q'],
+            'filterCategory' => ['except' => '', 'as' => 'cat'],
+            'filterStatus' => ['except' => '', 'as' => 'status'],
+            'filterThreatLevel' => ['except' => '', 'as' => 'threat'],
+            'myContributions' => ['except' => false, 'as' => 'mine'],
+            'dateFrom' => ['except' => '', 'as' => 'from'],
+            'dateTo' => ['except' => '', 'as' => 'to'],
+            'perPage' => ['except' => 15, 'as' => 'pp'],
+        ];
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['filterCategory', 'filterStatus', 'filterThreatLevel', 'myContributions', 'dateFrom', 'dateTo']);
+        $this->resetPage();
+    }
+
     public function updatingDateFrom(): void
     {
         $this->resetPage();
@@ -151,7 +172,7 @@ class ReportManager extends Component
             }
 
             fclose($handle);
-        }, 'rapports-' . now()->format('Y-m-d') . '.csv', [
+        }, 'rapports-'.now()->format('Y-m-d').'.csv', [
             'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
     }

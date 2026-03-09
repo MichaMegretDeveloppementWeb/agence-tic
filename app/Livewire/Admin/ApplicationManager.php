@@ -27,6 +27,24 @@ class ApplicationManager extends Component
 
     public int $perPage = 15;
 
+    /** @return array<string, array<string, mixed>> */
+    protected function queryString(): array
+    {
+        return [
+            'search' => ['except' => '', 'as' => 'q'],
+            'filterStatus' => ['except' => '', 'as' => 'status'],
+            'dateFrom' => ['except' => '', 'as' => 'from'],
+            'dateTo' => ['except' => '', 'as' => 'to'],
+            'perPage' => ['except' => 15, 'as' => 'pp'],
+        ];
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['filterStatus', 'dateFrom', 'dateTo']);
+        $this->resetPage();
+    }
+
     public function updatingDateFrom(): void
     {
         $this->resetPage();
@@ -96,7 +114,7 @@ class ApplicationManager extends Component
             }
 
             fclose($handle);
-        }, 'candidatures-' . now()->format('Y-m-d') . '.csv', [
+        }, 'candidatures-'.now()->format('Y-m-d').'.csv', [
             'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
     }
