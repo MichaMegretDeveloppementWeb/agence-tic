@@ -1,44 +1,33 @@
 #!/bin/bash
 
-# Script de déploiement
-# Usage: ./deploy.sh [--skip-maintenance]
+# Script de déploiement — Agence TIC
+# Usage: ./deploy.sh
 
 set -e
 
-REPO_URL="https://github.com/MichaMegretDeveloppementWeb/devigny-peinture.git"
-
-SKIP_MAINTENANCE=false
-if [ "$1" == "--skip-maintenance" ]; then
-    SKIP_MAINTENANCE=true
-fi
+REPO_URL="https://github.com/MichaMegretDeveloppementWeb/agence-tic.git"
 
 # Garantir la désactivation du mode maintenance même en cas d'erreur
 cleanup() {
-    if [ "$SKIP_MAINTENANCE" = false ]; then
-        echo "→ Désactivation du mode maintenance..."
-        php artisan up 2>/dev/null || true
-    fi
+    echo "→ Désactivation du mode maintenance..."
+    php artisan up 2>/dev/null || true
 }
 trap cleanup EXIT
 
 echo "============================================"
-echo "  Déploiement Devigny Peinture"
+echo "  Déploiement Agence TIC"
 echo "============================================"
 
-# 1. Vérifier que le remote origin pointe vers le bon dépôt
+# 1. Vérifier le remote origin
 CURRENT_REMOTE=$(git remote get-url origin 2>/dev/null || echo "")
 if [ "$CURRENT_REMOTE" != "$REPO_URL" ]; then
     echo "→ Correction du remote origin..."
-    echo "  Ancien : $CURRENT_REMOTE"
-    echo "  Nouveau : $REPO_URL"
     git remote set-url origin "$REPO_URL" 2>/dev/null || git remote add origin "$REPO_URL"
 fi
 
 # 2. Activer le mode maintenance
-if [ "$SKIP_MAINTENANCE" = false ]; then
-    echo "→ Activation du mode maintenance..."
-    php artisan down --retry=60 || true
-fi
+echo "→ Activation du mode maintenance..."
+php artisan down --retry=60 || true
 
 # 3. Récupérer les dernières modifications
 echo "→ Mise à jour du dépôt Git..."
@@ -49,16 +38,15 @@ git reset --hard origin/main
 echo "→ Installation des dépendances PHP..."
 php composer.phar install --no-dev --optimize-autoloader --no-interaction
 
-# 5. Installer les dépendances Node et compiler les assets
-echo "→ Compilation des assets (Vite)..."
-npm install --production=false
-npm run build
-
-# 6. Exécuter les migrations
+# 5. Exécuter les migrations
 echo "→ Exécution des migrations..."
 php artisan migrate --force
 
-# 7. Vider tous les caches Laravel
+# 6. Lien symbolique storage
+echo "→ Vérification du lien storage..."
+php artisan storage:link 2>/dev/null || true
+
+# 7. Vider tous les caches
 echo "→ Nettoyage des caches..."
 php artisan config:clear
 php artisan cache:clear
@@ -73,7 +61,7 @@ php artisan route:cache
 php artisan view:cache
 php artisan event:cache
 
-# 9. Vérifier et corriger les permissions
+# 9. Permissions
 echo "→ Correction des permissions..."
 chmod -R 755 storage bootstrap/cache
 find storage -type d -exec chmod 755 {} \;
