@@ -12,7 +12,7 @@ class ReportAccessTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAgentCanViewReportListPage(): void
+    public function test_agent_can_view_report_list_page(): void
     {
         $user = User::factory()->create();
 
@@ -21,7 +21,7 @@ class ReportAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCanViewReportWithSufficientLevel(): void
+    public function test_agent_can_view_report_with_sufficient_level(): void
     {
         $user = User::factory()->withLevel(5)->create();
         $report = Report::factory()->withLevel(3)->create();
@@ -32,7 +32,7 @@ class ReportAccessTest extends TestCase
         $response->assertSee($report->code);
     }
 
-    public function testAgentCannotViewReportWithInsufficientLevel(): void
+    public function test_agent_cannot_view_report_with_insufficient_level(): void
     {
         $user = User::factory()->withLevel(2)->create();
         $report = Report::factory()->withLevel(5)->create();
@@ -42,7 +42,7 @@ class ReportAccessTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function testAgentCanViewReportWithSpecialPermission(): void
+    public function test_agent_can_view_report_with_special_permission(): void
     {
         $user = User::factory()->withLevel(2)->create();
         $report = Report::factory()->withLevel(5)->create();
@@ -59,7 +59,7 @@ class ReportAccessTest extends TestCase
         $response->assertSee($report->code);
     }
 
-    public function testDirectorGCanViewAnyReport(): void
+    public function test_director_g_can_view_any_report(): void
     {
         $director = User::factory()->directorG()->create();
         $report = Report::factory()->withLevel(8)->create();
@@ -69,7 +69,7 @@ class ReportAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testReportShowLoadsCategoryRelation(): void
+    public function test_report_show_loads_category_relation(): void
     {
         $user = User::factory()->withLevel(8)->create();
         $report = Report::factory()->withLevel(1)->create();
@@ -80,7 +80,7 @@ class ReportAccessTest extends TestCase
         $response->assertSee($report->category->name);
     }
 
-    public function testDirectorGCanAccessReportEdit(): void
+    public function test_director_g_can_access_report_edit(): void
     {
         $director = User::factory()->directorG()->create();
         $report = Report::factory()->create();
@@ -90,7 +90,7 @@ class ReportAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCanAccessReportEdit(): void
+    public function test_agent_can_access_report_edit(): void
     {
         $agent = User::factory()->create();
         $report = Report::factory()->create();
@@ -100,7 +100,7 @@ class ReportAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testGuestCannotViewReport(): void
+    public function test_guest_cannot_view_report(): void
     {
         $report = Report::factory()->create();
 

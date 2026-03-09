@@ -18,7 +18,7 @@ class ReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => 'TIC-' . str_pad((string) self::$codeIncrement++, 4, '0', STR_PAD_LEFT),
+            'code' => 'TIC-'.str_pad((string) self::$codeIncrement++, 4, '0', STR_PAD_LEFT),
             'title' => ucfirst(fake()->words(3, true)),
             'category_id' => Category::factory(),
             'threat_level' => fake()->randomElement(ThreatLevel::cases()),

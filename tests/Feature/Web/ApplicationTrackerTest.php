@@ -12,14 +12,14 @@ class ApplicationTrackerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testTrackingPageIsAccessible(): void
+    public function test_tracking_page_is_accessible(): void
     {
         $response = $this->get(route('recruitment.tracking'));
 
         $response->assertOk();
     }
 
-    public function testCanSearchApplicationByTrackingCode(): void
+    public function test_can_search_application_by_tracking_code(): void
     {
         $application = Application::factory()->create([
             'tracking_code' => 'TIC-A3B7K9M2',
@@ -34,7 +34,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertSet('application.id', $application->id);
     }
 
-    public function testSearchIsCaseInsensitive(): void
+    public function test_search_is_case_insensitive(): void
     {
         $application = Application::factory()->create([
             'tracking_code' => 'TIC-A3B7K9M2',
@@ -49,7 +49,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertSet('application.id', $application->id);
     }
 
-    public function testShowsErrorWhenApplicationNotFound(): void
+    public function test_shows_error_when_application_not_found(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationTracker::class)
             ->set('trackingCode', 'TIC-ZZZZZZZZ')
@@ -59,7 +59,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertSet('application', null);
     }
 
-    public function testTrackingCodeIsRequired(): void
+    public function test_tracking_code_is_required(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationTracker::class)
             ->set('trackingCode', '')
@@ -67,7 +67,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertHasErrors('trackingCode');
     }
 
-    public function testTrackingCodeMustBeExactly12Characters(): void
+    public function test_tracking_code_must_be_exactly12_characters(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationTracker::class)
             ->set('trackingCode', 'TIC-SHORT')
@@ -75,7 +75,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertHasErrors('trackingCode');
     }
 
-    public function testDisplaysApplicationStatusBadge(): void
+    public function test_displays_application_status_badge(): void
     {
         Application::factory()->create([
             'tracking_code' => 'TIC-TEST1234',
@@ -93,7 +93,7 @@ class ApplicationTrackerTest extends TestCase
             ->assertSee('Acceptée');
     }
 
-    public function testTrackingCodeIsGeneratedOnSubmission(): void
+    public function test_tracking_code_is_generated_on_submission(): void
     {
         \Illuminate\Support\Facades\Mail::fake();
 
@@ -111,7 +111,7 @@ class ApplicationTrackerTest extends TestCase
         $this->assertMatchesRegularExpression('/^TIC-[A-Z0-9]{8}$/', $application->tracking_code);
     }
 
-    public function testTrackingCodeIsDisplayedAfterSubmission(): void
+    public function test_tracking_code_is_displayed_after_submission(): void
     {
         \Illuminate\Support\Facades\Mail::fake();
 

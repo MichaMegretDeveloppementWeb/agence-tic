@@ -42,7 +42,7 @@ class LoginForm extends Component
     {
         $this->validate();
 
-        $throttleKey = Str::lower($this->agent_code) . '|' . request()->ip();
+        $throttleKey = Str::lower($this->agent_code).'|'.request()->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);

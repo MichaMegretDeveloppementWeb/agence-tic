@@ -55,7 +55,7 @@ class ReportForm extends Component
             if ($duplicateId) {
                 $source = Report::find($duplicateId);
                 if ($source) {
-                    $this->title = $source->title . ' (copie)';
+                    $this->title = $source->title.' (copie)';
                     $this->categoryId = (string) $source->category_id;
                     $this->threatLevel = $source->threat_level->value;
                     $this->accreditationLevel = (string) $source->accreditation_level;

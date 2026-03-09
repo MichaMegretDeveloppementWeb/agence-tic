@@ -4,10 +4,10 @@ namespace App\Livewire\Admin;
 
 use App\Enums\UserRole;
 use App\Models\Document;
-use App\Services\ActivityLogger;
 use App\Models\Report;
 use App\Models\SpecialPermission;
 use App\Models\User;
+use App\Services\ActivityLogger;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

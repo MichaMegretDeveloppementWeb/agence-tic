@@ -18,7 +18,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'agent_code' => 'AGT-' . strtoupper(Str::random(6)),
+            'agent_code' => 'AGT-'.strtoupper(Str::random(6)),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

@@ -13,7 +13,7 @@ class PermissionManagerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDirectorGCanGrantPermission(): void
+    public function test_director_g_can_grant_permission(): void
     {
         $director = User::factory()->directorG()->create();
         $agent = User::factory()->withLevel(2)->create();
@@ -36,7 +36,7 @@ class PermissionManagerTest extends TestCase
         ]);
     }
 
-    public function testCannotGrantDuplicatePermission(): void
+    public function test_cannot_grant_duplicate_permission(): void
     {
         $director = User::factory()->directorG()->create();
         $agent = User::factory()->create();
@@ -57,7 +57,7 @@ class PermissionManagerTest extends TestCase
             ->assertHasErrors('permission-grant-failed');
     }
 
-    public function testGrantValidationRequiresFields(): void
+    public function test_grant_validation_requires_fields(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -70,7 +70,7 @@ class PermissionManagerTest extends TestCase
             ->assertHasErrors(['agentId', 'permissionableType', 'permissionableId']);
     }
 
-    public function testDirectorGCanRevokePermission(): void
+    public function test_director_g_can_revoke_permission(): void
     {
         $director = User::factory()->directorG()->create();
         $permission = SpecialPermission::factory()->create();
@@ -83,7 +83,7 @@ class PermissionManagerTest extends TestCase
         $this->assertDatabaseMissing('special_permissions', ['id' => $permission->id]);
     }
 
-    public function testRevokeNonExistentPermissionDoesNothing(): void
+    public function test_revoke_non_existent_permission_does_nothing(): void
     {
         $director = User::factory()->directorG()->create();
 

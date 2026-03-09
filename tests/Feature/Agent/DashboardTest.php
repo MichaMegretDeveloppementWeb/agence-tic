@@ -13,7 +13,7 @@ class DashboardTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDashboardPageLoadsSuccessfully(): void
+    public function test_dashboard_page_loads_successfully(): void
     {
         $user = User::factory()->withLevel(3)->create();
 
@@ -24,7 +24,7 @@ class DashboardTest extends TestCase
         $response->assertSee($user->name);
     }
 
-    public function testDashboardShowsCorrectReportCount(): void
+    public function test_dashboard_shows_correct_report_count(): void
     {
         $user = User::factory()->withLevel(3)->create();
 
@@ -38,7 +38,7 @@ class DashboardTest extends TestCase
         $response->assertSee('5'); // 3 level-2 + 2 level-3
     }
 
-    public function testDashboardShowsCorrectDocumentCount(): void
+    public function test_dashboard_shows_correct_document_count(): void
     {
         $user = User::factory()->withLevel(4)->create();
 
@@ -52,7 +52,7 @@ class DashboardTest extends TestCase
         $response->assertSee('2'); // only 2 active level-3 docs
     }
 
-    public function testDashboardShowsUserReminders(): void
+    public function test_dashboard_shows_user_reminders(): void
     {
         $user = User::factory()->create();
 

@@ -104,7 +104,7 @@ class LibraryController extends Controller
 
         return Storage::disk('private')->response($document->file_path, $document->file_name, [
             'Content-Type' => $document->mime_type,
-            'Content-Disposition' => 'inline; filename="' . $document->file_name . '"',
+            'Content-Disposition' => 'inline; filename="'.$document->file_name.'"',
         ]);
     }
 }

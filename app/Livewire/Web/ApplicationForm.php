@@ -59,7 +59,7 @@ class ApplicationForm extends Component
     {
         $validated = $this->validate();
 
-        $key = 'application-submit:' . request()->ip();
+        $key = 'application-submit:'.request()->ip();
 
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $seconds = RateLimiter::availableIn($key);
@@ -100,7 +100,7 @@ class ApplicationForm extends Component
             for ($i = 0; $i < 8; $i++) {
                 $suffix .= $characters[random_int(0, strlen($characters) - 1)];
             }
-            $code = 'TIC-' . $suffix;
+            $code = 'TIC-'.$suffix;
         } while (Application::where('tracking_code', $code)->exists());
 
         return $code;

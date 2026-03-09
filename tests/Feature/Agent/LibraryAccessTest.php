@@ -13,7 +13,7 @@ class LibraryAccessTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAgentCanViewLibraryPage(): void
+    public function test_agent_can_view_library_page(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class LibraryAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCanDownloadDocumentWithSufficientLevel(): void
+    public function test_agent_can_download_document_with_sufficient_level(): void
     {
         Storage::fake('private');
         Storage::disk('private')->put('documents/test.pdf', 'fake content');
@@ -39,7 +39,7 @@ class LibraryAccessTest extends TestCase
         $response->assertDownload('test.pdf');
     }
 
-    public function testAgentCannotDownloadDocumentWithInsufficientLevel(): void
+    public function test_agent_cannot_download_document_with_insufficient_level(): void
     {
         $user = User::factory()->withLevel(2)->create();
         $document = Document::factory()->withLevel(5)->create();
@@ -49,7 +49,7 @@ class LibraryAccessTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function testAgentCanDownloadDocumentWithSpecialPermission(): void
+    public function test_agent_can_download_document_with_special_permission(): void
     {
         Storage::fake('private');
         Storage::disk('private')->put('documents/secret.pdf', 'classified');
@@ -72,7 +72,7 @@ class LibraryAccessTest extends TestCase
         $response->assertDownload('secret.pdf');
     }
 
-    public function testDownloadReturns404WhenFileIsMissing(): void
+    public function test_download_returns404_when_file_is_missing(): void
     {
         Storage::fake('private');
 
@@ -86,7 +86,7 @@ class LibraryAccessTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function testDirectorGCanDownloadAnyDocument(): void
+    public function test_director_g_can_download_any_document(): void
     {
         Storage::fake('private');
         Storage::disk('private')->put('documents/top-secret.pdf', 'content');
@@ -103,7 +103,7 @@ class LibraryAccessTest extends TestCase
         $response->assertDownload('top-secret.pdf');
     }
 
-    public function testAgentCanViewDocumentWithSufficientLevel(): void
+    public function test_agent_can_view_document_with_sufficient_level(): void
     {
         $user = User::factory()->withLevel(5)->create();
         $document = Document::factory()->withLevel(3)->create();
@@ -114,7 +114,7 @@ class LibraryAccessTest extends TestCase
         $response->assertSee($document->title);
     }
 
-    public function testAgentCannotViewDocumentWithInsufficientLevel(): void
+    public function test_agent_cannot_view_document_with_insufficient_level(): void
     {
         $user = User::factory()->withLevel(2)->create();
         $document = Document::factory()->withLevel(5)->create();
@@ -124,7 +124,7 @@ class LibraryAccessTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function testAgentCanViewDocumentWithSpecialPermission(): void
+    public function test_agent_can_view_document_with_special_permission(): void
     {
         $user = User::factory()->withLevel(1)->create();
         $document = Document::factory()->withLevel(7)->create();
@@ -141,7 +141,7 @@ class LibraryAccessTest extends TestCase
         $response->assertSee($document->title);
     }
 
-    public function testDirectorGCanViewAnyDocument(): void
+    public function test_director_g_can_view_any_document(): void
     {
         $director = User::factory()->directorG()->create();
         $document = Document::factory()->withLevel(8)->create();
@@ -151,7 +151,7 @@ class LibraryAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testDirectorGCanAccessLibraryEdit(): void
+    public function test_director_g_can_access_library_edit(): void
     {
         $director = User::factory()->directorG()->create();
         $document = Document::factory()->create();
@@ -161,7 +161,7 @@ class LibraryAccessTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCanAccessLibraryEdit(): void
+    public function test_agent_can_access_library_edit(): void
     {
         $agent = User::factory()->create();
         $document = Document::factory()->create();

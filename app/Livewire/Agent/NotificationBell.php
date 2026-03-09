@@ -23,11 +23,11 @@ class NotificationBell extends Component
                     $q->where('type', ReminderType::Personal)
                         ->where('created_by', $user->id);
                 })
-                ->orWhere(function ($q) use ($user) {
-                    $q->where('type', ReminderType::Targeted)
-                        ->where('target_user_id', $user->id);
-                })
-                ->orWhere('type', ReminderType::Global);
+                    ->orWhere(function ($q) use ($user) {
+                        $q->where('type', ReminderType::Targeted)
+                            ->where('target_user_id', $user->id);
+                    })
+                    ->orWhere('type', ReminderType::Global);
             })
             ->pluck('id')
             ->toArray();

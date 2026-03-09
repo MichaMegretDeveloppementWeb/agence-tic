@@ -11,7 +11,7 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLoginPageIsAccessible(): void
+    public function test_login_page_is_accessible(): void
     {
         $response = $this->get(route('login'));
 
@@ -19,7 +19,7 @@ class LoginTest extends TestCase
         $response->assertSee('Identifiez-vous');
     }
 
-    public function testAgentCanLoginWithValidCredentials(): void
+    public function test_agent_can_login_with_valid_credentials(): void
     {
         $user = User::factory()->create([
             'agent_code' => 'AG-001',
@@ -35,7 +35,7 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    public function testAgentCannotLoginWithWrongPassword(): void
+    public function test_agent_cannot_login_with_wrong_password(): void
     {
         User::factory()->create([
             'agent_code' => 'AG-001',
@@ -52,7 +52,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testInactiveAgentCannotLogin(): void
+    public function test_inactive_agent_cannot_login(): void
     {
         User::factory()->inactive()->create([
             'agent_code' => 'AG-002',
@@ -69,7 +69,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testValidationRequiresAgentCodeAndPassword(): void
+    public function test_validation_requires_agent_code_and_password(): void
     {
         Livewire::test(\App\Livewire\Auth\LoginForm::class)
             ->set('agent_code', '')
@@ -78,7 +78,7 @@ class LoginTest extends TestCase
             ->assertHasErrors(['agent_code', 'password']);
     }
 
-    public function testLoginIsRateLimited(): void
+    public function test_login_is_rate_limited(): void
     {
         User::factory()->create([
             'agent_code' => 'AG-003',
@@ -101,7 +101,7 @@ class LoginTest extends TestCase
             ->assertHasErrors('login-throttled');
     }
 
-    public function testLogoutRedirectsToHome(): void
+    public function test_logout_redirects_to_home(): void
     {
         $user = User::factory()->create();
 

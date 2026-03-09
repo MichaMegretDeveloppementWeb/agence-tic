@@ -13,7 +13,7 @@ class ActivityLoggerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLogCreatesActivityEntry(): void
+    public function test_log_creates_activity_entry(): void
     {
         $user = User::factory()->create();
 
@@ -31,7 +31,7 @@ class ActivityLoggerTest extends TestCase
         ]);
     }
 
-    public function testLogWithPolymorphicSubject(): void
+    public function test_log_with_polymorphic_subject(): void
     {
         $user = User::factory()->create();
         $report = Report::factory()->create();
@@ -47,7 +47,7 @@ class ActivityLoggerTest extends TestCase
         $this->assertEquals($report->id, $entry->subject_id);
     }
 
-    public function testLogWithoutUser(): void
+    public function test_log_without_user(): void
     {
         $entry = app(ActivityLogger::class)->log(
             'system_event',
@@ -61,7 +61,7 @@ class ActivityLoggerTest extends TestCase
         ]);
     }
 
-    public function testLogWithoutSubject(): void
+    public function test_log_without_subject(): void
     {
         $user = User::factory()->create();
 

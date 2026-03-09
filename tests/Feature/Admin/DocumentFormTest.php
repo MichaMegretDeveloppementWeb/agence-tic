@@ -16,7 +16,7 @@ class DocumentFormTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDirectorCanCreateDocument(): void
+    public function test_director_can_create_document(): void
     {
         Storage::fake('private');
 
@@ -42,7 +42,7 @@ class DocumentFormTest extends TestCase
         ]);
     }
 
-    public function testCreateDocumentRequiresFile(): void
+    public function test_create_document_requires_file(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();
@@ -55,7 +55,7 @@ class DocumentFormTest extends TestCase
             ->assertHasErrors('file');
     }
 
-    public function testNotesAreSavedOnCreate(): void
+    public function test_notes_are_saved_on_create(): void
     {
         Storage::fake('private');
 
@@ -80,7 +80,7 @@ class DocumentFormTest extends TestCase
         ]);
     }
 
-    public function testReportAssociationIsSaved(): void
+    public function test_report_association_is_saved(): void
     {
         Storage::fake('private');
 
@@ -106,7 +106,7 @@ class DocumentFormTest extends TestCase
         ]);
     }
 
-    public function testDirectorCanUpdateDocument(): void
+    public function test_director_can_update_document(): void
     {
         Storage::fake('private');
 
@@ -130,7 +130,7 @@ class DocumentFormTest extends TestCase
         ]);
     }
 
-    public function testUpdateDocumentWithoutFileKeepsExistingFile(): void
+    public function test_update_document_without_file_keeps_existing_file(): void
     {
         Storage::fake('private');
         Storage::disk('private')->put('documents/existing.pdf', 'original content');
@@ -155,7 +155,7 @@ class DocumentFormTest extends TestCase
         ]);
     }
 
-    public function testCreateDocumentValidatesRequiredFields(): void
+    public function test_create_document_validates_required_fields(): void
     {
         $director = User::factory()->directorG()->create();
 

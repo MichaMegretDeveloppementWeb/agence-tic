@@ -13,14 +13,14 @@ class ApplicationFormTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testRecruitmentPageIsAccessible(): void
+    public function test_recruitment_page_is_accessible(): void
     {
         $response = $this->get(route('recruitment'));
 
         $response->assertOk();
     }
 
-    public function testVisitorCanSubmitApplication(): void
+    public function test_visitor_can_submit_application(): void
     {
         Mail::fake();
 
@@ -42,7 +42,7 @@ class ApplicationFormTest extends TestCase
         Mail::assertQueued(NewApplicationNotification::class);
     }
 
-    public function testApplicationValidationRequiresFields(): void
+    public function test_application_validation_requires_fields(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationForm::class)
             ->set('name', '')
@@ -52,7 +52,7 @@ class ApplicationFormTest extends TestCase
             ->assertHasErrors(['name', 'email', 'motivation']);
     }
 
-    public function testApplicationMotivationMinLength(): void
+    public function test_application_motivation_min_length(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationForm::class)
             ->set('name', 'Test')
@@ -62,7 +62,7 @@ class ApplicationFormTest extends TestCase
             ->assertHasErrors('motivation');
     }
 
-    public function testApplicationEmailValidation(): void
+    public function test_application_email_validation(): void
     {
         Livewire::test(\App\Livewire\Web\ApplicationForm::class)
             ->set('name', 'Test')
@@ -72,7 +72,7 @@ class ApplicationFormTest extends TestCase
             ->assertHasErrors('email');
     }
 
-    public function testApplicationIsRateLimited(): void
+    public function test_application_is_rate_limited(): void
     {
         Mail::fake();
 
@@ -97,7 +97,7 @@ class ApplicationFormTest extends TestCase
         $this->assertCount(3, Application::all());
     }
 
-    public function testExperienceIsOptional(): void
+    public function test_experience_is_optional(): void
     {
         Mail::fake();
 

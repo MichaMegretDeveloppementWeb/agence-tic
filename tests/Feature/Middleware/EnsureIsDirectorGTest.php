@@ -10,7 +10,7 @@ class EnsureIsDirectorGTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDirectorGCanAccessAdminRoutes(): void
+    public function test_director_g_can_access_admin_routes(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -19,7 +19,7 @@ class EnsureIsDirectorGTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCannotAccessAdminRoutes(): void
+    public function test_agent_cannot_access_admin_routes(): void
     {
         $agent = User::factory()->create();
 
@@ -28,7 +28,7 @@ class EnsureIsDirectorGTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function testGuestCannotAccessAdminRoutes(): void
+    public function test_guest_cannot_access_admin_routes(): void
     {
         $response = $this->get(route('admin.agents.index'));
 

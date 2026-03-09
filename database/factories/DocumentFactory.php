@@ -18,8 +18,8 @@ class DocumentFactory extends Factory
     {
         return [
             'title' => ucfirst(fake()->words(3, true)),
-            'file_path' => 'documents/' . fake()->uuid() . '.pdf',
-            'file_name' => fake()->word() . '.pdf',
+            'file_path' => 'documents/'.fake()->uuid().'.pdf',
+            'file_name' => fake()->word().'.pdf',
             'mime_type' => 'application/pdf',
             'file_size' => fake()->numberBetween(10_000, 5_000_000),
             'category_id' => Category::factory(),

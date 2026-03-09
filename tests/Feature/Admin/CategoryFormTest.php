@@ -14,7 +14,7 @@ class CategoryFormTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAnyUserCanViewCategoryShow(): void
+    public function test_any_user_can_view_category_show(): void
     {
         $user = User::factory()->create();
         $category = Category::factory()->create();
@@ -25,7 +25,7 @@ class CategoryFormTest extends TestCase
         $response->assertSee($category->name);
     }
 
-    public function testDirectorGCanAccessCategoryEdit(): void
+    public function test_director_g_can_access_category_edit(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();
@@ -35,7 +35,7 @@ class CategoryFormTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCannotAccessCategoryEdit(): void
+    public function test_agent_cannot_access_category_edit(): void
     {
         $agent = User::factory()->create();
         $category = Category::factory()->create();
@@ -45,7 +45,7 @@ class CategoryFormTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function testDirectorCanCreateCategory(): void
+    public function test_director_can_create_category(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -64,7 +64,7 @@ class CategoryFormTest extends TestCase
         ]);
     }
 
-    public function testCreateCategoryValidatesRequiredFields(): void
+    public function test_create_category_validates_required_fields(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -75,7 +75,7 @@ class CategoryFormTest extends TestCase
             ->assertHasErrors('name');
     }
 
-    public function testCategoryNameMustBeUnique(): void
+    public function test_category_name_must_be_unique(): void
     {
         $director = User::factory()->directorG()->create();
         Category::factory()->create(['name' => 'Existante']);
@@ -87,7 +87,7 @@ class CategoryFormTest extends TestCase
             ->assertHasErrors('name');
     }
 
-    public function testDirectorCanUpdateCategory(): void
+    public function test_director_can_update_category(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create(['name' => 'Ancien nom']);
@@ -108,7 +108,7 @@ class CategoryFormTest extends TestCase
         ]);
     }
 
-    public function testNameUniquenessIgnoresCurrentCategoryOnUpdate(): void
+    public function test_name_uniqueness_ignores_current_category_on_update(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create(['name' => 'Ma catégorie']);
@@ -121,7 +121,7 @@ class CategoryFormTest extends TestCase
             ->assertRedirect();
     }
 
-    public function testCanDeleteEmptyCategory(): void
+    public function test_can_delete_empty_category(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();
@@ -134,7 +134,7 @@ class CategoryFormTest extends TestCase
         $this->assertDatabaseMissing('categories', ['id' => $category->id]);
     }
 
-    public function testCannotDeleteCategoryWithReports(): void
+    public function test_cannot_delete_category_with_reports(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();
@@ -148,7 +148,7 @@ class CategoryFormTest extends TestCase
         $this->assertDatabaseHas('categories', ['id' => $category->id]);
     }
 
-    public function testCannotDeleteCategoryWithDocuments(): void
+    public function test_cannot_delete_category_with_documents(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();

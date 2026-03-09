@@ -13,7 +13,7 @@ class ReminderTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAgentCanViewRemindersPage(): void
+    public function test_agent_can_view_reminders_page(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class ReminderTest extends TestCase
         $response->assertOk();
     }
 
-    public function testAgentCanCreatePersonalReminder(): void
+    public function test_agent_can_create_personal_reminder(): void
     {
         $user = User::factory()->create();
 
@@ -41,7 +41,7 @@ class ReminderTest extends TestCase
         ]);
     }
 
-    public function testReminderCreationValidation(): void
+    public function test_reminder_creation_validation(): void
     {
         $user = User::factory()->create();
 
@@ -52,7 +52,7 @@ class ReminderTest extends TestCase
             ->assertHasErrors('title');
     }
 
-    public function testReminderTitleMinLength(): void
+    public function test_reminder_title_min_length(): void
     {
         $user = User::factory()->create();
 
@@ -63,7 +63,7 @@ class ReminderTest extends TestCase
             ->assertHasErrors('title');
     }
 
-    public function testAgentCanToggleOwnReminder(): void
+    public function test_agent_can_toggle_own_reminder(): void
     {
         $user = User::factory()->create();
         $reminder = Reminder::factory()->create([
@@ -79,7 +79,7 @@ class ReminderTest extends TestCase
         $this->assertTrue($reminder->fresh()->is_completed);
     }
 
-    public function testAgentCannotToggleOtherAgentReminder(): void
+    public function test_agent_cannot_toggle_other_agent_reminder(): void
     {
         $user = User::factory()->create();
         $other = User::factory()->create();
@@ -96,7 +96,7 @@ class ReminderTest extends TestCase
         $this->assertFalse($reminder->fresh()->is_completed);
     }
 
-    public function testAgentCanDeleteOwnReminder(): void
+    public function test_agent_can_delete_own_reminder(): void
     {
         $user = User::factory()->create();
         $reminder = Reminder::factory()->create([
@@ -112,7 +112,7 @@ class ReminderTest extends TestCase
         $this->assertDatabaseMissing('reminders', ['id' => $reminder->id]);
     }
 
-    public function testAgentCannotDeleteOtherAgentReminder(): void
+    public function test_agent_cannot_delete_other_agent_reminder(): void
     {
         $user = User::factory()->create();
         $other = User::factory()->create();
@@ -128,7 +128,7 @@ class ReminderTest extends TestCase
         $this->assertDatabaseHas('reminders', ['id' => $reminder->id]);
     }
 
-    public function testAgentCannotToggleGlobalReminder(): void
+    public function test_agent_cannot_toggle_global_reminder(): void
     {
         $user = User::factory()->create();
         $reminder = Reminder::factory()->global()->create([
@@ -143,7 +143,7 @@ class ReminderTest extends TestCase
         $this->assertFalse($reminder->fresh()->is_completed);
     }
 
-    public function testAgentSeesGlobalReminders(): void
+    public function test_agent_sees_global_reminders(): void
     {
         $user = User::factory()->create();
         $director = User::factory()->directorG()->create();
@@ -158,7 +158,7 @@ class ReminderTest extends TestCase
             ->assertSee('Annonce globale');
     }
 
-    public function testAgentSeesTargetedReminders(): void
+    public function test_agent_sees_targeted_reminders(): void
     {
         $user = User::factory()->create();
         $director = User::factory()->directorG()->create();
@@ -173,7 +173,7 @@ class ReminderTest extends TestCase
             ->assertSee('Rappel ciblé pour agent');
     }
 
-    public function testDirectorGCanCreateGlobalReminder(): void
+    public function test_director_g_can_create_global_reminder(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -193,7 +193,7 @@ class ReminderTest extends TestCase
         ]);
     }
 
-    public function testDirectorGCanCreateTargetedReminder(): void
+    public function test_director_g_can_create_targeted_reminder(): void
     {
         $director = User::factory()->directorG()->create();
         $agent = User::factory()->create();
@@ -215,7 +215,7 @@ class ReminderTest extends TestCase
         ]);
     }
 
-    public function testAgentCannotCreateGlobalReminder(): void
+    public function test_agent_cannot_create_global_reminder(): void
     {
         $agent = User::factory()->create();
 
@@ -235,7 +235,7 @@ class ReminderTest extends TestCase
         ]);
     }
 
-    public function testTargetedReminderRequiresAgent(): void
+    public function test_targeted_reminder_requires_agent(): void
     {
         $director = User::factory()->directorG()->create();
 

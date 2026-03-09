@@ -16,9 +16,7 @@ class NewApplicationNotification extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Application $application)
-    {
-    }
+    public function __construct(public Application $application) {}
 
     /**
      * Get the message envelope.

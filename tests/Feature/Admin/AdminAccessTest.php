@@ -22,7 +22,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('adminRoutesProvider')]
-    public function testDirectorGCanAccessAdminPage(string $routeName): void
+    public function test_director_g_can_access_admin_page(string $routeName): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -32,7 +32,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('adminRoutesProvider')]
-    public function testAgentCannotAccessAdminPage(string $routeName): void
+    public function test_agent_cannot_access_admin_page(string $routeName): void
     {
         $agent = User::factory()->create();
 
@@ -42,7 +42,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('adminRoutesProvider')]
-    public function testGuestCannotAccessAdminPage(string $routeName): void
+    public function test_guest_cannot_access_admin_page(string $routeName): void
     {
         $response = $this->get(route($routeName));
 
@@ -60,7 +60,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('authenticatedRoutesProvider')]
-    public function testAuthenticatedUserCanAccessPage(string $routeName): void
+    public function test_authenticated_user_can_access_page(string $routeName): void
     {
         $user = User::factory()->create();
 
@@ -70,7 +70,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('authenticatedRoutesProvider')]
-    public function testGuestCannotAccessAuthenticatedPage(string $routeName): void
+    public function test_guest_cannot_access_authenticated_page(string $routeName): void
     {
         $response = $this->get(route($routeName));
 
@@ -86,7 +86,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('directorOnlyCreateRoutesProvider')]
-    public function testDirectorGCanAccessCreatePage(string $routeName): void
+    public function test_director_g_can_access_create_page(string $routeName): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -96,7 +96,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('directorOnlyCreateRoutesProvider')]
-    public function testAgentCannotAccessCreatePage(string $routeName): void
+    public function test_agent_cannot_access_create_page(string $routeName): void
     {
         $agent = User::factory()->create();
 
@@ -115,7 +115,7 @@ class AdminAccessTest extends TestCase
     }
 
     #[DataProvider('authenticatedCreateRoutesProvider')]
-    public function testAnyUserCanAccessCreatePage(string $routeName): void
+    public function test_any_user_can_access_create_page(string $routeName): void
     {
         $agent = User::factory()->create();
 

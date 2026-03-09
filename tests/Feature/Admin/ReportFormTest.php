@@ -15,7 +15,7 @@ class ReportFormTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDirectorCanCreateReport(): void
+    public function test_director_can_create_report(): void
     {
         $director = User::factory()->directorG()->create();
         $category = Category::factory()->create();
@@ -45,7 +45,7 @@ class ReportFormTest extends TestCase
         ]);
     }
 
-    public function testCreateReportValidatesRequiredFields(): void
+    public function test_create_report_validates_required_fields(): void
     {
         $director = User::factory()->directorG()->create();
 
@@ -59,7 +59,7 @@ class ReportFormTest extends TestCase
             ->assertHasErrors(['code', 'title', 'categoryId', 'description']);
     }
 
-    public function testCodeMustBeUnique(): void
+    public function test_code_must_be_unique(): void
     {
         $director = User::factory()->directorG()->create();
         $existing = Report::factory()->create(['code' => 'TIC-EXIST']);
@@ -76,7 +76,7 @@ class ReportFormTest extends TestCase
             ->assertHasErrors('code');
     }
 
-    public function testDirectorCanUpdateReport(): void
+    public function test_director_can_update_report(): void
     {
         $director = User::factory()->directorG()->create();
         $report = Report::factory()->create(['title' => 'Ancien titre']);
@@ -96,7 +96,7 @@ class ReportFormTest extends TestCase
         ]);
     }
 
-    public function testCodeUniquenessIgnoresCurrentReportOnUpdate(): void
+    public function test_code_uniqueness_ignores_current_report_on_update(): void
     {
         $director = User::factory()->directorG()->create();
         $report = Report::factory()->create(['code' => 'TIC-MINE']);

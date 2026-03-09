@@ -10,7 +10,7 @@ class EnsureAgentIsActiveTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testActiveAgentCanAccessProtectedRoutes(): void
+    public function test_active_agent_can_access_protected_routes(): void
     {
         $user = User::factory()->create(['is_active' => true]);
 
@@ -19,7 +19,7 @@ class EnsureAgentIsActiveTest extends TestCase
         $response->assertOk();
     }
 
-    public function testInactiveAgentIsLoggedOutAndRedirected(): void
+    public function test_inactive_agent_is_logged_out_and_redirected(): void
     {
         $user = User::factory()->inactive()->create();
 
@@ -30,7 +30,7 @@ class EnsureAgentIsActiveTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testGuestIsRedirectedToLogin(): void
+    public function test_guest_is_redirected_to_login(): void
     {
         $response = $this->get(route('dashboard'));
 

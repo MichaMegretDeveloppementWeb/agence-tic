@@ -9,7 +9,7 @@ class PublicPagesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testHomePageIsAccessible(): void
+    public function test_home_page_is_accessible(): void
     {
         $response = $this->get(route('home'));
 
@@ -17,14 +17,14 @@ class PublicPagesTest extends TestCase
         $response->assertSee('Agence TIC');
     }
 
-    public function testRecruitmentPageIsAccessible(): void
+    public function test_recruitment_page_is_accessible(): void
     {
         $response = $this->get(route('recruitment'));
 
         $response->assertOk();
     }
 
-    public function testLoginPageIsAccessible(): void
+    public function test_login_page_is_accessible(): void
     {
         $response = $this->get(route('login'));
 
