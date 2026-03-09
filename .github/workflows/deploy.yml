@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         run: php artisan test --compact
         env:
-          APP_KEY: base64:dGVzdGluZ2tleWZvcmNpY2RwaXBlbGluZTEyMzQ1Ng==
+          APP_KEY: base64:FkggsqeV+jeZGIgF9jCspK11IJEkrFBmKaLXqSHb9ag=
 
   deploy:
     name: Deploy to Hostinger
